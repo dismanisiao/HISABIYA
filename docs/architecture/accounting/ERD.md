@@ -45,3 +45,23 @@
 │ name            │
 │ sku             │
 └─────────────────┘
+---
+Business
+
+Account
+JournalEntry
+JournalLine
+
+Product
+Unit
+
+Supplier
+Customer
+
+Purchase
+PurchaseItem
+
+Sale
+SaleItem
+
+InventoryMovement
