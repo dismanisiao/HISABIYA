@@ -1,75 +1,37 @@
-# React + TypeScript + Vite
+# HISABIYA
+Local-First AI-Assisted Accounting/Inventory Management with NFRS Reports.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+This project is a **cross-platform desktop accounting and inventory
+management application for small and medium-sized businesses**, with an
+initial focus on supermarkets, retail stores, wholesalers, and similar
+businesses in Nepal.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The application combines:
 
-## React Compiler
+-   Double-entry bookkeeping
+-   Sales and purchase management
+-   Inventory management
+-   Customers and suppliers
+-   Financial reporting
+-   NFRS-oriented reporting
+-   Business dashboards and analytics
+-   AI-assisted natural-language transaction entry
+-   AI-assisted business analysis
+-   Audit trails and accounting controls
+-   A polished, modern desktop UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Windows will be the primary target. Linux and macOS support are
+desirable but are not the first priority.
 
-## Expanding the ESLint configuration
+The central idea is:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+> **Build a reliable accounting and inventory system first, then use AI
+> as an intelligent interface to that system.**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The AI should interpret user intent and explain business information,
+while deterministic application code remains responsible for accounting
+calculations, inventory calculations, validation, and database changes.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+------------------------------------------------------------------------
