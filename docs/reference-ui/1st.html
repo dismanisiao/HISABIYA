@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hisab · Workspace Wireframe v7</title>
+<style>
+:root{
+  --bg:#edf1f4;
+  --panel:#ffffff;
+  --panel-soft:#f7f9fb;
+  --line:#c4cdd6;
+  --line-soft:#dbe2e8;
+  --text:#26313a;
+  --muted:#657583;
+  --title:#d8dee5;
+  --menu:#f8fafb;
+  --toolbar:#eef2f5;
+  --hover:#e8eef5;
+  --accent:#2e5f8a;
+  --accent-dark:#234b6d;
+  --accent-soft:#dce8f4;
+  --selected:#d8e6f3;
+  --success:#3f6d57;
+  --success-soft:#dfece5;
+  font-family:Segoe UI, Arial, sans-serif;
+  font-size:13px;
+  color:var(--text);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.window{height:100vh;min-height:620px;display:flex;flex-direction:column}
+.titlebar{background:var(--title);border-bottom:1px solid #b5c0ca;padding:8px 14px;display:flex;justify-content:space-between;font-weight:600}
+.menubar{display:flex;gap:2px;background:var(--menu);border-bottom:1px solid var(--line);padding:4px 10px}
+.menu{border:0;background:transparent;padding:6px 10px;border-radius:3px;color:#445667}
+.menu:hover,.tool:hover{background:var(--hover)}
+.toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 10px;background:var(--toolbar);border-bottom:1px solid var(--line)}
+.tool{background:white;border:1px solid var(--line);border-radius:3px;padding:7px 10px;color:#334657}
+.tool.primary{background:var(--accent);border-color:var(--accent);color:white}
+.sep{height:26px;border-left:1px solid #c9d2da;margin:0 4px}
+.main{flex:1;display:flex;min-height:0}
+.left{width:220px;display:flex;flex-direction:column;background:#f6f8fa;border-right:1px solid var(--line)}
+.lefthead{padding:12px 14px;border-bottom:1px solid var(--line-soft);font-size:12px;font-weight:700;color:#526475}
+.sidenav{flex:1;overflow:auto;padding:10px 8px}
+.nav{width:100%;text-align:left;border:0;background:transparent;padding:10px 11px;border-radius:4px;color:#34485b;margin-bottom:3px}
+.nav:hover{background:#ebf0f5}
+.nav.active{background:var(--accent);color:white;font-weight:650}
+.work{flex:1;display:flex;flex-direction:column;min-width:0}
+.tabs{height:38px;background:#e6eaef;border-bottom:1px solid var(--line);display:flex;align-items:end;gap:3px;padding:5px 10px 0;overflow:auto}
+.tab{background:#f3f5f7;border:1px solid var(--line);border-bottom:none;padding:8px 14px;border-radius:5px 5px 0 0;white-space:nowrap;color:#415466}
+.tab.active{background:white;color:#22313d;font-weight:650}
+.pane{flex:1;background:white;overflow:auto;padding:18px 22px 36px}
+.pane h2{margin:0 0 4px;font-size:20px}
+.sub{color:var(--muted);font-size:12px;margin-bottom:16px}
+.panetool{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 14px}
+.panetool input,.panetool select,.field input,.field select,.field textarea{padding:7px 9px;border:1px solid #bcc9d3;border-radius:3px;background:white;color:var(--text)}
+.btn{padding:8px 12px;border:1px solid var(--line);border-radius:3px;background:#f5f7f9;color:#344759}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:white}
+.tablewrap{border:1px solid var(--line);overflow:auto;width:100%}
+.ledger{border-collapse:collapse;width:100%;min-width:680px;font-size:12px}
+.ledger th{background:#e7edf3;text-align:left;padding:9px 10px;border-bottom:1px solid #bcc7d1;border-right:1px solid #d2dae2;color:#42576b;font-weight:650;white-space:nowrap}
+.ledger td{padding:9px 10px;border-bottom:1px solid #e1e7ed;border-right:1px solid #e4eaf0}
+.ledger tr:nth-child(even){background:#f9fbfc}
+.ledger tbody tr:hover{background:#eef4fa}
+.ledger tr.selected{background:var(--selected)}
+.ledger .right{text-align:right;font-variant-numeric:tabular-nums}
+.ledger .parent{font-weight:700;background:#e5ebf0}
+.ledger .child{padding-left:28px}
+.ledger .leaf{padding-left:52px}
+.notice{margin:12px 0;padding:11px 13px;border-left:4px solid var(--accent);background:#eef4fa;color:#385367}
+.notice.success{border-left-color:var(--success);background:#eef5f1;color:#365546}
+.badge{display:inline-block;padding:3px 7px;border:1px solid #cdd9e3;border-radius:3px;background:#eef4fa;font-size:11px}
+.badge.nfrs{background:var(--success-soft);border-color:#c7d7cf;color:#234a37}
+.summary{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}
+.card{background:var(--panel-soft);border:1px solid var(--line-soft);padding:10px 12px;min-width:180px}
+.card .small{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.card .big{font-size:18px;font-weight:700;margin-top:4px}
+.kv{display:grid;grid-template-columns:220px 1fr;gap:6px 16px;max-width:760px;margin:8px 0 14px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px;max-width:760px}
+.field{margin:0 0 12px}.label{display:block;margin-bottom:4px;font-size:12px;font-weight:600;color:#516476}
+.field input,.field select,.field textarea{width:100%}
+.dialogbg{position:fixed;inset:0;background:#1e2b3860;display:none;align-items:center;justify-content:center;padding:16px}
+.dialogbg.open{display:flex}.dialog{width:min(640px,100%);max-height:90vh;overflow:auto;background:white;border:1px solid #8797a8;box-shadow:0 14px 44px rgba(0,0,0,.18);padding:20px}.dialog h2{margin:0 0 10px}.actions{display:flex;gap:8px;margin-top:14px}
+.menupop{position:absolute;top:66px;left:10px;background:white;border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.12);padding:5px;display:none;z-index:20;min-width:210px}.menupop.open{display:block}.menupop button{display:block;width:100%;text-align:left;border:0;background:white;padding:10px;border-radius:3px}.menupop button:hover{background:#edf2f7}
+.status{background:#e9edf1;border-top:1px solid var(--line);padding:6px 12px;font-size:11px;color:#5d6f7d;display:flex;justify-content:space-between}
+/* Command page */
+.command-shell{max-width:980px;margin:10px auto 0}
+.command-hero{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:18px;flex-wrap:wrap}
+.command-copy h1{font-size:28px;margin:0 0 8px}
+.command-copy p{margin:0;color:var(--muted);line-height:1.45;max-width:620px}
+.mini-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.mini-chip{background:#f2f6fa;border:1px solid var(--line-soft);border-radius:999px;padding:6px 10px;color:#466074;font-size:12px}
+.command-card{background:linear-gradient(180deg,#fbfcfd 0%,#f7f9fb 100%);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.04)}
+.command-box{position:relative}
+.command-input{width:100%;min-height:120px;resize:none;border:1px solid #c8d2db;border-radius:16px;padding:16px 18px 52px;background:white;font-size:15px;line-height:1.45;color:var(--text);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.command-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.prompt-actions{display:flex;gap:8px;flex-wrap:wrap}
+.action-pill{border:1px solid var(--line);background:white;border-radius:999px;padding:8px 12px;color:#415566}
+.submit-btn{background:var(--accent);color:white;border:1px solid var(--accent);border-radius:999px;padding:9px 14px;font-weight:600}
+.suggestions{position:absolute;left:0;right:0;top:calc(100% - 44px);background:white;border:1px solid #cad5de;border-radius:14px;box-shadow:0 12px 34px rgba(0,0,0,.12);padding:8px;margin-top:8px;display:none;z-index:15}
+.suggestions.open{display:block}
+.suggestion-title{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#6e7e8c;font-weight:700;padding:4px 8px 8px}
+.suggestion-item{padding:10px 12px;border-radius:10px;display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.suggestion-item:hover,.suggestion-item.active{background:#eef4fa}
+.suggestion-main{font-weight:600;color:#29465d}
+.suggestion-sub{font-size:12px;color:#6a7a88;margin-top:2px}
+.suggestion-tag{font-size:11px;border:1px solid #d3dce5;background:#f6f9fc;border-radius:999px;padding:3px 8px;white-space:nowrap}
+.command-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:16px;margin-top:16px}
+.list-card{background:#fbfcfd;border:1px solid var(--line-soft);border-radius:14px;padding:14px}
+.list-card h3{margin:0 0 10px;font-size:15px}
+.quick-list{display:grid;gap:8px}
+.quick-button{border:1px solid #d5dde5;background:white;border-radius:10px;padding:10px 12px;text-align:left;color:#355065}
+.quick-button:hover{background:#eff5fa}
+.preview-box{background:white;border:1px solid #d7dfe7;border-radius:12px;padding:12px}
+.preview-box h4{margin:0 0 10px;font-size:14px}
+.preview-box .line{margin:6px 0;color:#415868}
+.preview-empty{color:#738392;font-size:12px}
+@media (max-width:900px){.command-grid{grid-template-columns:1fr}.left{width:170px}.formgrid{grid-template-columns:1fr}.pane{padding:12px}.titlebar{font-size:12px}}
+
+/* ChatGPT-inspired home: minimal surface, suggestions appear only after input */
+:root{--bg:#f8f9fa;--accent:#30343b;--line:#e2e5e9;--text:#25272b}
+.titlebar{background:#f8f9fa;border-bottom:1px solid #ebecef}
+.menubar{display:none}.tabs{display:none}.left{background:#f5f6f7;width:220px;border-right:1px solid #e7e8eb}
+.lefthead{border-bottom:none;padding:21px 18px;color:#30343b;font-size:13px}
+.nav{padding:11px 14px;border-radius:9px;margin-bottom:4px;color:#333940}
+.nav.active{background:#e7e9ed;color:#25292f}.nav:hover{background:#e9ebef}
+.pane{padding:0;background:white}.pane:has(.chat-home){display:flex;overflow:auto}
+.chat-home{width:100%;min-height:100%;display:flex;align-items:center;justify-content:center;padding:32px 28px 110px}
+.chat-center{width:100%;max-width:745px}
+.chat-greeting{font-size:30px;font-weight:600;letter-spacing:-.65px;text-align:center;margin-bottom:32px;color:#27292e}
+.chat-composer{border:1px solid #e6e7e9;box-shadow:0 5px 24px #18202b10;border-radius:24px;background:#f5f5f6;position:relative;padding:16px 16px 12px}
+.chat-composer:focus-within{border-color:#d1d4d8;box-shadow:0 7px 28px #18202b16}
+.chat-input{display:block;background:transparent;border:0;outline:none;resize:none;width:100%;min-height:64px;font-size:16px;line-height:1.5;color:#25282c;padding:0 4px}
+.chat-input:focus-visible{outline:none}.chat-input::placeholder{color:#888c92}
+.chat-controls{display:flex;justify-content:space-between;align-items:center}
+.chat-caption{font-size:12px;color:#8a8d92;padding-left:4px}
+.chat-send{width:36px;height:36px;border:0;border-radius:50%;background:#222429;color:white;font-size:23px;line-height:1}
+.chat-send:hover{background:#45494f}
+.chat-help{color:#92959a;text-align:center;font-size:12px;margin-top:16px}
+.chat-result:not(:empty){border:1px solid #e5e7e9;background:#fafafa;border-radius:14px;margin-top:24px;padding:18px;color:#43474d}
+.chat-result p{font-size:15px}.chat-result span{color:#747981;font-size:12px}
+.suggestions{position:absolute;top:calc(100% + 8px);left:0;right:0;margin:0;background:white;border:1px solid #e4e6e9;border-radius:16px;box-shadow:0 12px 35px #14182020;padding:8px;display:none;z-index:15}
+.suggestions.open{display:block}.suggestion-title{padding:7px 12px 9px;color:#94979c}
+.suggestion-item{width:100%;border:0;background:transparent;text-align:left;cursor:pointer;align-items:center}
+.suggestion-item:hover,.suggestion-item.active{background:#f3f4f5}
+.suggestion-main,.suggestion-sub{display:block}.suggestion-main{color:#30343a}.suggestion-sub{color:#82868b}.suggestion-tag{background:#f5f6f7;color:#777c82}
+@media(max-width:740px){.left{width:150px}.chat-home{padding:30px 14px 100px}.chat-greeting{font-size:23px}}
+
+/* v7: full-width ChatGPT-inspired workspace, no left sidebar */
+.main{width:100%;min-width:0}.work{width:100%;min-width:0}.pane{width:100%;background:#fff;overflow:auto}.pane:has(.workspace-home){display:block;padding:0}.workspace-home{max-width:1260px;width:100%;margin:0 auto;padding:40px 42px 52px;color:#272a30}
+.workspace-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.workspace-eyebrow{font-size:10px;letter-spacing:1.4px;font-weight:700;color:#898c91;margin-bottom:12px}.workspace-top h1{font-size:30px;font-weight:600;letter-spacing:-.8px;margin:0 0 8px}.workspace-top p{margin:0;color:#83858a;font-size:14px}.workspace-settings{background:transparent;border:1px solid #e8e9eb;border-radius:10px;padding:10px 14px;color:#696d75}
+.shortcut-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;margin-top:30px;margin-bottom:46px}.shortcut{min-width:0;display:flex;align-items:center;gap:8px;background:#fafafa;border:1px solid #e8e8e9;padding:13px 12px;border-radius:12px;text-align:left;font-size:13px;font-weight:600;color:#444850}.shortcut:hover,.metric:hover,.quick-action-grid button:hover{background:#f1f2f3;border-color:#d3d5d8}.shortcut>span:first-child{font-size:17px;color:#737880}.shortcut-arrow{margin-left:auto;font-size:12px;color:#9a9ea3}
+.composer-section{max-width:810px;margin:0 auto 43px;width:100%}.composer-label{text-align:center;font-size:11px;letter-spacing:1.5px;color:#9a9da2;font-weight:700;margin-bottom:13px}.chat-composer{background:#f6f6f6;border:1px solid #e8e8e9;border-radius:25px;padding:18px 18px 12px;box-shadow:0 6px 24px #161b2310}.chat-input{min-height:65px}.suggestions{top:calc(100% + 9px);z-index:30;max-height:320px;overflow:auto}.chat-result:not(:empty){margin-top:14px}.workspace-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}.workspace-section-head strong,.panel-heading strong{font-size:15px}.workspace-section-head span,.panel-heading span{font-size:11px;color:#989ba0}
+.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.metric{border:1px solid #e6e7e9;background:#fff;border-radius:15px;padding:19px 17px;text-align:left;min-height:125px;display:flex;flex-direction:column;gap:9px}.metric span{font-size:12px;color:#777d84}.metric strong{font-weight:600;font-size:21px;letter-spacing:-.4px}.metric small{font-size:11px;color:#999ca1;line-height:1.3}.workspace-bottom{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}.workspace-panel{border:1px solid #e8e9eb;border-radius:15px;padding:19px 17px;background:#fff}.panel-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}.quick-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick-action-grid button{border:1px solid #e9eaec;background:#fafafa;border-radius:10px;padding:14px 12px;text-align:left;color:#41454c}.attention{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:10px 5px;background:white;border:0;border-bottom:1px solid #f0f1f3;color:#535963}.attention b{font-weight:500;color:#90969d;margin-left:auto;white-space:nowrap}.attention:hover{background:#f8f9fa}
+@media(max-width:1000px){.workspace-home{padding:28px 22px 38px}.shortcut-row{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:33px}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:580px){.workspace-home{padding:22px 13px 30px}.workspace-top h1{font-size:24px}.shortcut-row{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-grid,.workspace-bottom{grid-template-columns:1fr}.workspace-section-head{align-items:start;flex-direction:column}.workspace-settings{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar"><span>▦ Hisab — Kathmandu Mini Mart</span><span>Accounting & Inventory • Workspace Wireframe v7</span></div>
+  <div class="menubar">
+    <button class="menu" onclick="menu(event)">File</button>
+    <button class="menu" onclick="menu(event)">Edit</button>
+    <button class="menu" onclick="menu(event)">View</button>
+    <button class="menu" onclick="menu(event)">Actions</button>
+    <button class="menu" onclick="menu(event)">Reports</button>
+    <button class="menu" onclick="menu(event)">Tools</button>
+    <button class="menu" onclick="menu(event)">Help</button>
+  </div>
+  <div id="menupop" class="menupop">
+    <button onclick="go('command');closemenu()">Open Ask Hisab</button>
+    <button onclick="openForm('sale');closemenu()">New Sales Invoice</button>
+    <button onclick="openForm('purchase');closemenu()">New Purchase Bill</button>
+    <button onclick="go('nfrsReports');closemenu()">Open NFRS Statements</button>
+  </div>
+  <div class="main">
+    <section class="work">
+      <div id="tabs" class="tabs"></div>
+      <main id="pane" class="pane"></main>
+    </section>
+  </div>
+  <div class="status"><span>● Local wireframe · demo data only</span><span>NPR | 20 Oct 2026 | Suggestions appear only when typing</span></div>
+</div>
+<div class="dialogbg" id="dialogbg" onclick="if(event.target===this)closeDialog()"><div class="dialog"><div id="dialogbody"></div></div></div>
+<script>
+const fmt=n=>'Rs '+Number(n||0).toLocaleString('en-IN');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const titles={command:'Ask Hisab',transactions:'Transactions',accounts:'Accounts',inventory:'Inventory',contacts:'Contacts',reports:'Reports',nfrsReports:'NFRS Statements',settings:'Settings'};
+let current='command';
+let tabs=['command'];
+let picked='1110';
+let serial=105;
+let selectedSuggestion=-1;
+const accounts=[
+  {code:'1000',name:'Assets',kind:'Asset',level:0,nfrs:'Statement of Financial Position > Assets'},
+  {code:'1100',name:'Current Assets',kind:'Asset',level:1,nfrs:'Current Assets'},
+  {code:'1110',name:'Cash in Hand',kind:'Asset',level:2,balance:145000,nfrs:'Cash and Cash Equivalents'},
+  {code:'1120',name:'Bank Account',kind:'Asset',level:2,balance:340300,nfrs:'Cash and Cash Equivalents'},
+  {code:'1130',name:'Accounts Receivable',kind:'Asset',level:2,balance:78500,nfrs:'Trade and Other Receivables'},
+  {code:'1140',name:'Inventory',kind:'Asset',level:2,balance:262400,nfrs:'Inventories'},
+  {code:'2100',name:'Accounts Payable',kind:'Liability',level:1,balance:112400,nfrs:'Trade and Other Payables'},
+  {code:'2200',name:'VAT Payable',kind:'Liability',level:1,balance:18000,nfrs:'Taxes Payable'},
+  {code:'3100',name:'Owner Capital',kind:'Equity',level:1,balance:500000,nfrs:'Owner Equity'},
+  {code:'4100',name:'Sales Revenue',kind:'Income',level:1,balance:190000,nfrs:'Revenue'},
+  {code:'5100',name:'Cost of Goods Sold',kind:'Expense',level:1,balance:112000,nfrs:'Cost of Sales'},
+  {code:'5300',name:'Rent Expense',kind:'Expense',level:1,balance:18000,nfrs:'Administrative Expenses'}
+];
+const transactions=[
+  {ref:'J-001',date:'2026-10-18',description:'Shop rent',debit:'Rent Expense',credit:'Bank Account',amount:18000},
+  {ref:'J-002',date:'2026-10-19',description:'Purchase from ABC Distributors',debit:'Inventory',credit:'Accounts Payable',amount:24000},
+  {ref:'J-003',date:'2026-10-20',description:'Cash sale',debit:'Cash in Hand',credit:'Sales Revenue',amount:15500},
+  {ref:'J-004',date:'2026-10-20',description:'COGS for cash sale',debit:'Cost of Goods Sold',credit:'Inventory',amount:8200},
+  {ref:'J-005',date:'2026-10-20',description:'VAT recognized on sale',debit:'Cash in Hand',credit:'VAT Payable',amount:1950}
+];
+const invoices=[
+  {ref:'INV-0101',date:'2026-10-20',party:'Ram Stores',amount:15500,status:'Paid'},
+  {ref:'INV-0102',date:'2026-10-20',party:'Asha Trading',amount:22000,status:'Unpaid'}
+];
+const bills=[
+  {ref:'BILL-0084',date:'2026-10-19',party:'ABC Distributors',amount:24000,status:'Unpaid'},
+  {ref:'BILL-0085',date:'2026-10-20',party:'Himalaya Suppliers',amount:9800,status:'Paid'}
+];
+const products=[
+  {sku:'PRD-001',name:'Coca-Cola 500ml',unit:'Bottle',stock:120,cost:35,price:50},
+  {sku:'PRD-002',name:'Wai Wai Noodles',unit:'Packet',stock:280,cost:18,price:25},
+  {sku:'PRD-003',name:'Sunflower Oil 1L',unit:'Bottle',stock:45,cost:190,price:240}
+];
+const contacts={customers:[['Ram Stores','9841000001',34500],['Asha Trading','9801000002',26500]],suppliers:[['ABC Distributors','9811000001',60000],['Himalaya Suppliers','9842000002',52400]]};
+const commandSuggestions=[
+  {text:'Create sales invoice',sub:'Start a new customer invoice',tag:'Sales',keywords:'sale sales sell invoice billing',action:()=>openForm('sale')},
+  {text:'View sales transactions',sub:'Browse sales invoices and journal activity',tag:'Sales',keywords:'sale sales revenue transaction invoices',action:()=>go('transactions')},
+  {text:'Check unpaid sales invoices',sub:'Review customer invoice balances',tag:'Sales',keywords:'sale sales invoice unpaid outstanding due receivable',action:()=>go('transactions')},
+  {text:'Record purchase from supplier',sub:'Create a supplier purchase bill',tag:'Purchases',keywords:'purchase buy supplier bill stock',action:()=>openForm('purchase')},
+  {text:'View purchase bills',sub:'Browse supplier bills and purchase history',tag:'Purchases',keywords:'purchase purchases bought supplier bills',action:()=>go('transactions')},
+  {text:'Check supplier balances',sub:'Review amounts owed to suppliers',tag:'Purchases',keywords:'purchase supplier payable due amount owe',action:()=>go('contacts')},
+  {text:'Show trial balance',sub:'Open the trial balance report',tag:'Reports',keywords:'trial balance accounts reports ledger',action:()=>{go('reports');setTimeout(()=>{const el=document.getElementById('reportSel');if(el){el.value='Trial Balance';generateReport();}},40)}},
+  {text:'Show income statement',sub:'View profit and loss figures',tag:'Reports',keywords:'income profit loss earnings financial report',action:()=>{go('reports');setTimeout(()=>{const el=document.getElementById('reportSel');if(el){el.value='Income Statement';generateReport();}},40)}},
+  {text:'Show balance sheet',sub:'View assets, liabilities and equity',tag:'Reports',keywords:'balance sheet financial position assets liabilities report',action:()=>{go('reports');setTimeout(()=>{const el=document.getElementById('reportSel');if(el){el.value='Balance Sheet';generateReport();}},40)}},
+  {text:'Open chart of accounts',sub:'View account codes and balances',tag:'Accounts',keywords:'account accounts chart ledger cash bank',action:()=>go('accounts')},
+  {text:'Create new account',sub:'Add an account to the ledger',tag:'Accounts',keywords:'account accounts chart ledger new add',action:()=>openForm('account')},
+  {text:'Create journal entry',sub:'Record a manual debit and credit',tag:'Accounts',keywords:'account accounts journal entry debit credit bookkeep',action:()=>openForm('journal')},
+  {text:'Check inventory stock',sub:'View on-hand products and quantities',tag:'Inventory',keywords:'inventory stock product quantities available',action:()=>go('inventory')},
+  {text:'Add new product',sub:'Create an inventory product',tag:'Inventory',keywords:'inventory stock product item create add',action:()=>openForm('product')},
+  {text:'Review low stock products',sub:'Open stock quantities for review',tag:'Inventory',keywords:'inventory stock low reorder running out product',action:()=>go('inventory')},
+  {text:'Show NFRS statement of financial position',sub:'Open NFRS-oriented financial position statement',tag:'NFRS',keywords:'nfrs nepal financial position',action:()=>{go('nfrsReports');setTimeout(()=>{const el=document.getElementById('nfrsSel');if(el){el.value='Statement of Financial Position';generateNfrs();}},40)}},
+  {text:'Show NFRS profit or loss',sub:'Open the NFRS-oriented performance statement',tag:'NFRS',keywords:'nfrs nepal profit loss income',action:()=>{go('nfrsReports');setTimeout(()=>{const el=document.getElementById('nfrsSel');if(el){el.value='Statement of Profit or Loss';generateNfrs();}},40)}},
+  {text:'Show NFRS account mappings',sub:'View statement classifications',tag:'NFRS',keywords:'nfrs mapping map accounts nepal',action:()=>go('accounts')},
+  {text:'View customers and suppliers',sub:'Open the contacts directory',tag:'Contacts',keywords:'customer supplier contacts client vendor',action:()=>go('contacts')},
+  {text:'Check amounts customers owe',sub:'Review customer outstanding balances',tag:'Contacts',keywords:'customer receivable outstanding owe debt',action:()=>go('contacts')},
+  {text:'Review VAT payable',sub:'Open the tax liability account list',tag:'Tax',keywords:'vat tax payable nepal',action:()=>go('accounts')}
+];
+let commandText='';
+let visibleSuggestions=[];
+const h=(title,sub)=>`<h2>${title}</h2><div class="sub">${sub}</div>`;
+const btn=(label,action,kind='')=>`<button class="btn ${kind}" onclick="${action}">${label}</button>`;
+const tool=html=>`<div class="panetool">${html}</div>`;
+const table=(heads,rows)=>`<div class="tablewrap"><table class="ledger"><thead><tr>${heads.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;
+function openTab(id){if(!tabs.includes(id))tabs.push(id); current=id; render();}
+function go(id){openTab(id)}
+function renderTabs(){
+  document.getElementById('tabs').innerHTML=tabs.map(t=>`<div class="tab ${t===current?'active':''}" onclick="go('${t}')">${titles[t]||t}</div>`).join('');
+  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.page===current));
+}
+function getSuggestions(q){
+  const query=q.trim().toLowerCase();
+  if(!query)return [];
+  const words=query.split(/\s+/).filter(w=>w && !['the','a','an','to','of','for','me','my','please','can','you','show'].includes(w));
+  if(!words.length)return [];
+  return commandSuggestions.map((s,index)=>{
+    const title=s.text.toLowerCase();
+    const hay=(s.text+' '+s.sub+' '+s.tag+' '+s.keywords).toLowerCase();
+    let score=0;
+    for(const word of words){
+      if(title.includes(word))score+=5;
+      else if(hay.split(/[^a-z0-9]+/).some(w=>w.startsWith(word)))score+=3;
+      else if(hay.includes(word))score+=1;
+    }
+    return {s,score,index};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.index-b.index).slice(0,6).map(x=>x.s);
+}
+function renderCommand(){
+  const cash=accounts.filter(a=>['1110','1120'].includes(a.code)).reduce((t,a)=>t+(a.balance||0),0);
+  const currentAssets=accounts.filter(a=>['1110','1120','1130','1140'].includes(a.code)).reduce((t,a)=>t+(a.balance||0),0);
+  const bestSeller='Wai Wai Noodles'; // illustrative demo metric, not derived from limited invoice data
+  return `<div class="workspace-home">
+    <div class="workspace-top"><div><div class="workspace-eyebrow">YOUR WORKSPACE · DEMO</div><h1>Good evening, welcome to Hisab.</h1><p>What would you like to work on today?</p></div><button class="workspace-settings" onclick="go('settings')" aria-label="Open settings">⚙ Settings</button></div>
+    <div class="shortcut-row" aria-label="Workspace navigation">
+      ${[['transactions','Transactions','▤'],['accounts','Accounts','▦'],['inventory','Inventory','◫'],['contacts','Contacts','♧'],['reports','Reports','▣'],['nfrsReports','NFRS','◈']].map(([id,label,ico])=>`<button class="shortcut" onclick="go('${id}')"><span>${ico}</span> ${label}<span class="shortcut-arrow">↗</span></button>`).join('')}
+    </div>
+    <div class="composer-section"><div class="composer-label">ASK HISAB</div><div class="chat-composer">
+      <textarea id="commandInput" class="chat-input" rows="2" placeholder="Ask about your business, create an invoice, or open a report..." oninput="updateSuggestions(this.value)" onkeydown="handleCommandKey(event)" onfocus="updateSuggestions(this.value)">${esc(commandText)}</textarea>
+      <div class="chat-controls"><span class="chat-caption">Press Enter to submit · Shift + Enter for a new line</span><button class="chat-send" onclick="runPrompt()" aria-label="Submit command">↑</button></div>
+      <div id="suggestions" class="suggestions" role="listbox" aria-label="Matching actions"></div>
+    </div><div id="promptPreview" class="chat-result" aria-live="polite"></div></div>
+    <div class="workspace-section-head"><strong>Business at a glance</strong><span>Illustrative balances · not live accounting results</span></div>
+    <div class="metric-grid">
+      <button class="metric" onclick="go('accounts')"><span>Current assets</span><strong>${fmt(currentAssets)}</strong><small>Cash + bank + receivables + inventory</small></button>
+      <button class="metric" onclick="go('accounts')"><span>Cash & bank</span><strong>${fmt(cash)}</strong><small>From sample account balances</small></button>
+      <button class="metric" onclick="go('reports')"><span>Profit this week</span><strong>Rs 18,600</strong><small>Example only · not calculated</small></button>
+      <button class="metric" onclick="go('inventory')"><span>Best seller</span><strong>${bestSeller}</strong><small>Example only · demo ranking</small></button>
+    </div>
+    <div class="workspace-bottom">
+      <div class="workspace-panel"><div class="panel-heading"><strong>Quick actions</strong><span>Common workflows</span></div>
+      <div class="quick-action-grid"><button onclick="openForm('sale')">＋ Sales invoice</button><button onclick="openForm('purchase')">＋ Purchase bill</button><button onclick="openForm('journal')">＋ Journal entry</button><button onclick="openForm('product')">＋ New product</button></div></div>
+      <div class="workspace-panel"><div class="panel-heading"><strong>Needs attention</strong><span>Demo records</span></div>
+      <button class="attention" onclick="go('transactions')"><span>○</span><span>1 unpaid sales invoice</span><b>View →</b></button>
+      <button class="attention" onclick="go('inventory')"><span>○</span><span>Review inventory stock levels</span><b>View →</b></button>
+      <button class="attention" onclick="go('nfrsReports')"><span>○</span><span>NFRS-oriented statements</span><b>Open →</b></button></div>
+    </div>
+  </div>`;
+}
+function renderTransactions(){
+  return h('Transactions','Recent invoices, bills, and journal activity in one place.')+
+  tool(btn('＋ New Invoice',"openForm('sale')",'primary')+btn('＋ New Bill',"openForm('purchase')")+btn('＋ Journal Entry',"openForm('journal')"))+
+  table(['Date','Reference','Type','Party / Description','Amount'],[
+    ...invoices.map(x=>`<tr><td>${x.date}</td><td>${x.ref}</td><td>Sales Invoice</td><td>${esc(x.party)}</td><td class="right">${fmt(x.amount)}</td></tr>`),
+    ...bills.map(x=>`<tr><td>${x.date}</td><td>${x.ref}</td><td>Purchase Bill</td><td>${esc(x.party)}</td><td class="right">${fmt(x.amount)}</td></tr>`),
+    ...transactions.map(x=>`<tr><td>${x.date}</td><td>${x.ref}</td><td>Journal</td><td>${esc(x.description)}</td><td class="right">${fmt(x.amount)}</td></tr>`)
+  ]);
+}
+function renderAccounts(){
+  return h('Accounts','Simple account list with balances and NFRS mapping.')+
+  tool(btn('＋ New Account',"openForm('account')",'primary')+btn('＋ Journal Entry',"openForm('journal')"))+
+  table(['Account Code / Name','Type','NFRS Mapping','Balance (NPR)'],accounts.map(a=>`<tr><td class="${a.level===0?'parent':a.level===1?'child':'leaf'}">${a.level===0?'▼ ':a.level===1?'▾ ':'▹ '}${a.code} — ${esc(a.name)}</td><td>${a.kind}</td><td><span class="badge nfrs">${esc(a.nfrs)}</span></td><td class="right">${a.balance!==undefined?fmt(a.balance):'—'}</td></tr>`)) +
+  `<div class="notice">The old left-side accounting tree has been removed. Accounts stay accessible here or through the Ask Hisab prompt.</div>`;
+}
+function renderInventory(){
+  return h('Inventory','Products and current stock levels.')+
+  tool(btn('＋ New Product',"openForm('product')",'primary'))+
+  table(['SKU','Product Name','Unit','On Hand','Purchase Cost','Selling Price'],products.map(p=>`<tr><td>${esc(p.sku)}</td><td>${esc(p.name)}</td><td>${p.unit}</td><td class="right">${p.stock}</td><td class="right">${fmt(p.cost)}</td><td class="right">${fmt(p.price)}</td></tr>`));
+}
+function renderContacts(){
+  return h('Contacts','Customers and suppliers in a single view.')+
+  `<div class="summary"><div class="card"><div class="small">Customers</div><div class="big">${contacts.customers.length}</div></div><div class="card"><div class="small">Suppliers</div><div class="big">${contacts.suppliers.length}</div></div></div>`+
+  table(['Type','Name','Phone','Outstanding (NPR)'],[
+    ...contacts.customers.map(x=>`<tr><td>Customer</td><td>${x[0]}</td><td>${x[1]}</td><td class="right">${fmt(x[2])}</td></tr>`),
+    ...contacts.suppliers.map(x=>`<tr><td>Supplier</td><td>${x[0]}</td><td>${x[1]}</td><td class="right">${fmt(x[2])}</td></tr>`)
+  ]);
+}
+function renderReports(){
+  return h('Reports','Tabular financial reports without graphs.')+
+    tool(`<label>Report: <select id="reportSel"><option>Trial Balance</option><option>Income Statement</option><option>Balance Sheet</option><option>General Ledger</option><option>Inventory Valuation</option></select></label>`+btn('Generate','generateReport()','primary'))+
+    `<div id="reportOut" class="notice">Select a report and click Generate. Reports use illustrative demo figures.</div>`;
+}
+function renderNfrsReports(){
+  return h('NFRS Statements','NFRS-oriented statement output using mapped demo balances.')+
+    tool(`<label>Statement: <select id="nfrsSel"><option>Statement of Financial Position</option><option>Statement of Profit or Loss</option><option>Trial Balance (NFRS view)</option></select></label>`+btn('Generate','generateNfrs()','primary'))+
+    `<div id="nfrsOut" class="notice success">Choose an NFRS statement and click Generate.</div>`;
+}
+function renderSettings(){
+  return h('Settings','Display-only application preferences for the wireframe.')+
+  `<div class="formgrid">
+    <div class="field"><label class="label">Business name</label><input value="Kathmandu Mini Mart" readonly></div>
+    <div class="field"><label class="label">Currency</label><input value="NPR" readonly></div>
+    <div class="field"><label class="label">Interface mode</label><input value="Command-first" readonly></div>
+    <div class="field"><label class="label">Report style</label><input value="Classic + NFRS-oriented" readonly></div>
+  </div>`;
+}
+function render(){
+  renderTabs();
+  let out='';
+  if(current==='command') out=renderCommand();
+  else if(current==='transactions') out=renderTransactions();
+  else if(current==='accounts') out=renderAccounts();
+  else if(current==='inventory') out=renderInventory();
+  else if(current==='contacts') out=renderContacts();
+  else if(current==='reports') out=renderReports();
+  else if(current==='nfrsReports') out=renderNfrsReports();
+  else out=renderSettings();
+  document.getElementById('pane').innerHTML=out;
+  if(current==='command') setTimeout(()=>{bindCommandArea(); updateSuggestions(commandText);},0);
+}
+function bindCommandArea(){
+  const el=document.getElementById('commandInput');
+  if(el){el.focus(); el.selectionStart=el.selectionEnd=el.value.length;}
+}
+function setPrompt(text){commandText=text; if(current!=='command') go('command'); else {render();}}
+function updateSuggestions(value){
+  commandText=value;
+  visibleSuggestions=getSuggestions(value);
+  selectedSuggestion=-1;
+  paintSuggestions();
+  const preview=document.getElementById('promptPreview');
+  if(preview) preview.innerHTML='';
+}
+function paintSuggestions(){
+  const box=document.getElementById('suggestions');
+  if(!box) return;
+  if(!commandText.trim() || !visibleSuggestions.length){box.className='suggestions';box.innerHTML='';return;}
+  box.className='suggestions open';
+  box.innerHTML='<div class="suggestion-title">Suggested actions</div>'+visibleSuggestions.map((s,i)=>`<button type="button" class="suggestion-item ${i===selectedSuggestion?'active':''}" onclick="applyVisibleSuggestion(${i},true)" role="option" aria-selected="${i===selectedSuggestion}"><span><span class="suggestion-main">${esc(s.text)}</span><span class="suggestion-sub">${esc(s.sub)}</span></span><span class="suggestion-tag">${esc(s.tag)}</span></button>`).join('');
+}
+function handleCommandKey(event){
+  if(event.key==='ArrowDown' && visibleSuggestions.length){event.preventDefault();selectedSuggestion=(selectedSuggestion+1)%visibleSuggestions.length;paintSuggestions();}
+  else if(event.key==='ArrowUp' && visibleSuggestions.length){event.preventDefault();selectedSuggestion=(selectedSuggestion-1+visibleSuggestions.length)%visibleSuggestions.length;paintSuggestions();}
+  else if(event.key==='Enter' && !event.shiftKey){event.preventDefault();if(selectedSuggestion>=0)applyVisibleSuggestion(selectedSuggestion,true);else runPrompt();}
+  else if(event.key==='Escape'){const box=document.getElementById('suggestions');if(box)box.className='suggestions';}
+}
+function applyVisibleSuggestion(index,execute){
+  const s=visibleSuggestions[index];if(!s)return;
+  commandText=s.text;
+  if(execute)s.action();else render();
+}
+function runPrompt(){
+  if(!commandText.trim()) return;
+  const match=getSuggestions(commandText)[0];
+  if(match && match.text.toLowerCase()===commandText.trim().toLowerCase()){
+    match.action();return;
+  }
+  const preview=document.getElementById('promptPreview');
+  if(preview)preview.innerHTML='<strong>Command preview</strong><p>'+esc(commandText)+'</p><span>This is a UI prototype. Select a matching suggestion to open an action; AI interpretation is not yet connected.</span>';
+  const box=document.getElementById('suggestions');if(box)box.className='suggestions';
+}
+function closeDialog(){document.getElementById('dialogbg').classList.remove('open')}
+function openForm(type){
+  const title={account:'New Account',journal:'New Journal Entry',sale:'New Sales Invoice',purchase:'New Purchase Bill',product:'New Product'}[type];
+  const field=(label,id,typ='text')=>`<div class="field"><label class="label" for="${id}">${label}</label><input id="${id}" type="${typ}" required></div>`;
+  let content='';
+  if(type==='account') content=field('Account code','fcode')+field('Account name','fname')+`<div class="field"><label class="label">Type</label><select id="fkind"><option>Asset</option><option>Liability</option><option>Equity</option><option>Income</option><option>Expense</option></select></div><div class="field"><label class="label">NFRS mapping</label><input id="fnfrs" placeholder="e.g. Cash and Cash Equivalents"></div>`;
+  if(type==='journal') content=field('Date','fdate','date')+field('Description','fdesc')+`<div class="field"><label class="label">Debit Account</label><select id="fdebit">${accounts.filter(a=>a.balance!==undefined).map(a=>`<option>${a.name}</option>`).join('')}</select></div><div class="field"><label class="label">Credit Account</label><select id="fcredit">${accounts.filter(a=>a.balance!==undefined).map(a=>`<option>${a.name}</option>`).join('')}</select></div>`+field('Amount (NPR)','famount','number');
+  if(type==='sale'||type==='purchase') content=field(type==='sale'?'Customer':'Supplier','fparty')+field('Date','fdate','date')+field('Total (NPR)','famount','number')+`<div class="field"><label class="label">Payment status</label><select id="fstatus"><option>Unpaid</option><option>Paid</option></select></div>`;
+  if(type==='product') content=field('SKU','fsku')+field('Product name','fname')+field('Unit','funit')+field('Current stock','fstock','number')+field('Cost','fcost','number')+field('Sale price','fprice','number');
+  document.getElementById('dialogbody').innerHTML=`<h2>${title}</h2><div style="color:#627483;font-size:12px">Wireframe only: saves to temporary page state.</div><form id="f" style="margin-top:15px">${content}<div class="actions"><button type="submit" class="btn primary">Save Demo Record</button><button type="button" class="btn" onclick="closeDialog()">Cancel</button></div></form>`;
+  document.getElementById('dialogbg').classList.add('open');
+  if(document.getElementById('fdate')) document.getElementById('fdate').value='2026-10-20';
+  document.getElementById('f').onsubmit=e=>{e.preventDefault(); const v=id=>document.getElementById(id)?.value||''; const amount=Number(v('famount')); if(type==='account'){accounts.push({code:v('fcode'),name:v('fname'),kind:v('fkind'),level:1,balance:0,nfrs:v('fnfrs')||'Unmapped'}); go('accounts')} if(type==='journal'){if(v('fdebit')===v('fcredit')) return alert('Debit and credit accounts must differ.'); if(!(amount>0)) return alert('Amount must be greater than zero.'); transactions.push({ref:'J-'+(++serial),date:v('fdate'),description:v('fdesc'),debit:v('fdebit'),credit:v('fcredit'),amount}); go('transactions')} if(type==='sale'||type==='purchase'){if(!(amount>0)) return alert('Total must be greater than zero.'); (type==='sale'?invoices:bills).push({ref:(type==='sale'?'INV-':'BILL-')+(++serial),date:v('fdate'),party:v('fparty'),amount,status:v('fstatus')}); go('transactions')} if(type==='product'){products.push({sku:v('fsku'),name:v('fname'),unit:v('funit'),stock:Number(v('fstock')),cost:Number(v('fcost')),price:Number(v('fprice'))}); go('inventory')} closeDialog(); };
+}
+function generateReport(){
+  const name=document.getElementById('reportSel').value; let html='';
+  if(name==='Trial Balance') html=table(['Account','Debit','Credit'],accounts.filter(a=>a.balance!==undefined).map(a=>`<tr><td>${a.code} — ${esc(a.name)}</td><td class="right">${(a.kind==='Asset'||a.kind==='Expense')?fmt(a.balance):'—'}</td><td class="right">${(a.kind==='Liability'||a.kind==='Equity'||a.kind==='Income')?fmt(a.balance):'—'}</td></tr>`));
+  else if(name==='Income Statement') html=table(['Section','Amount'],[`<tr><td>Revenue</td><td class="right">${fmt(190000)}</td></tr>`,`<tr><td>Cost of Goods Sold</td><td class="right">${fmt(112000)}</td></tr>`,`<tr><td>Rent Expense</td><td class="right">${fmt(18000)}</td></tr>`,`<tr><td><strong>Net Profit</strong></td><td class="right"><strong>${fmt(60000)}</strong></td></tr>`]);
+  else if(name==='Balance Sheet') html=table(['Section','Amount'],[`<tr><td>Cash and Cash Equivalents</td><td class="right">${fmt(485300)}</td></tr>`,`<tr><td>Trade Receivables</td><td class="right">${fmt(78500)}</td></tr>`,`<tr><td>Inventories</td><td class="right">${fmt(262400)}</td></tr>`,`<tr><td>Trade Payables</td><td class="right">${fmt(112400)}</td></tr>`]);
+  else html=table(['Reference / Name','Balance'],accounts.filter(a=>a.balance!==undefined).map(a=>`<tr><td>${esc(a.name)}</td><td class="right">${fmt(a.balance)}</td></tr>`));
+  document.getElementById('reportOut').innerHTML=`<div class="notice">${esc(name)} — illustrative figures only.</div>${html}`;
+}
+function generateNfrs(){
+  const name=document.getElementById('nfrsSel').value; let html='';
+  if(name==='Statement of Financial Position') html=table(['NFRS Category','Amount (NPR)'],[`<tr><td>Cash and Cash Equivalents</td><td class="right">${fmt(485300)}</td></tr>`,`<tr><td>Trade and Other Receivables</td><td class="right">${fmt(78500)}</td></tr>`,`<tr><td>Inventories</td><td class="right">${fmt(262400)}</td></tr>`,`<tr><td>Trade and Other Payables</td><td class="right">${fmt(112400)}</td></tr>`,`<tr><td>Taxes Payable</td><td class="right">${fmt(18000)}</td></tr>`]);
+  else if(name==='Statement of Profit or Loss') html=table(['NFRS Category','Amount (NPR)'],[`<tr><td>Revenue</td><td class="right">${fmt(190000)}</td></tr>`,`<tr><td>Cost of Sales</td><td class="right">${fmt(112000)}</td></tr>`,`<tr><td>Administrative Expenses</td><td class="right">${fmt(18000)}</td></tr>`,`<tr><td><strong>Profit for the Period</strong></td><td class="right"><strong>${fmt(60000)}</strong></td></tr>`]);
+  else html=table(['Ledger Account','Mapped NFRS Category','Balance'],accounts.filter(a=>a.balance!==undefined).map(a=>`<tr><td>${a.code} — ${esc(a.name)}</td><td>${esc(a.nfrs)}</td><td class="right">${fmt(a.balance)}</td></tr>`));
+  document.getElementById('nfrsOut').innerHTML=`<div class="notice success">${esc(name)} — NFRS-oriented presentation using mapped demo balances.</div>${html}`;
+}
+function menu(event){const el=document.getElementById('menupop'); el.style.left=event.target.getBoundingClientRect().left+'px'; el.classList.toggle('open')}
+function closemenu(){document.getElementById('menupop').classList.remove('open')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDialog(); closemenu(); const box=document.getElementById('suggestions'); if(box) box.className='suggestions';}});
+render();
+</script>
+</body>
+</html>
