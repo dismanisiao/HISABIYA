@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hisab · Workspace Wireframe v7</title>
+<title>Hisabiya · Workspace Wireframe v7</title>
 <style>
 :root{
   --bg:#edf1f4;
@@ -161,7 +161,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 </head>
 <body>
 <div class="window">
-  <div class="titlebar"><span>▦ Hisab — Kathmandu Mini Mart</span><span>Accounting & Inventory • Workspace Wireframe v7</span></div>
+  <div class="titlebar"><span>▦ Hisabiya — Kathmandu Mini Mart</span><span>Accounting & Inventory • Workspace Wireframe v7</span></div>
   <div class="menubar">
     <button class="menu" onclick="menu(event)">File</button>
     <button class="menu" onclick="menu(event)">Edit</button>
@@ -172,7 +172,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     <button class="menu" onclick="menu(event)">Help</button>
   </div>
   <div id="menupop" class="menupop">
-    <button onclick="go('command');closemenu()">Open Ask Hisab</button>
+    <button onclick="go('command');closemenu()">Open Ask Hisabiya</button>
     <button onclick="openForm('sale');closemenu()">New Sales Invoice</button>
     <button onclick="openForm('purchase');closemenu()">New Purchase Bill</button>
     <button onclick="go('nfrsReports');closemenu()">Open NFRS Statements</button>
@@ -189,7 +189,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <script>
 const fmt=n=>'Rs '+Number(n||0).toLocaleString('en-IN');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const titles={command:'Ask Hisab',transactions:'Transactions',accounts:'Accounts',inventory:'Inventory',contacts:'Contacts',reports:'Reports',nfrsReports:'NFRS Statements',settings:'Settings'};
+const titles={command:'Ask Hisabiya',transactions:'Transactions',accounts:'Accounts',inventory:'Inventory',contacts:'Contacts',reports:'Reports',nfrsReports:'NFRS Statements',settings:'Settings'};
 let current='command';
 let tabs=['command'];
 let picked='1110';
@@ -287,11 +287,11 @@ function renderCommand(){
   const currentAssets=accounts.filter(a=>['1110','1120','1130','1140'].includes(a.code)).reduce((t,a)=>t+(a.balance||0),0);
   const bestSeller='Wai Wai Noodles'; // illustrative demo metric, not derived from limited invoice data
   return `<div class="workspace-home">
-    <div class="workspace-top"><div><div class="workspace-eyebrow">YOUR WORKSPACE · DEMO</div><h1>Good evening, welcome to Hisab.</h1><p>What would you like to work on today?</p></div><button class="workspace-settings" onclick="go('settings')" aria-label="Open settings">⚙ Settings</button></div>
+    <div class="workspace-top"><div><div class="workspace-eyebrow">YOUR WORKSPACE · DEMO</div><h1>Good evening, welcome to Hisabiya</h1><p>What would you like to work on today?</p></div><button class="workspace-settings" onclick="go('settings')" aria-label="Open settings">⚙ Settings</button></div>
     <div class="shortcut-row" aria-label="Workspace navigation">
       ${[['transactions','Transactions','▤'],['accounts','Accounts','▦'],['inventory','Inventory','◫'],['contacts','Contacts','♧'],['reports','Reports','▣'],['nfrsReports','NFRS','◈']].map(([id,label,ico])=>`<button class="shortcut" onclick="go('${id}')"><span>${ico}</span> ${label}<span class="shortcut-arrow">↗</span></button>`).join('')}
     </div>
-    <div class="composer-section"><div class="composer-label">ASK HISAB</div><div class="chat-composer">
+    <div class="composer-section"><div class="composer-label">ASK HISABIYA</div><div class="chat-composer">
       <textarea id="commandInput" class="chat-input" rows="2" placeholder="Ask about your business, create an invoice, or open a report..." oninput="updateSuggestions(this.value)" onkeydown="handleCommandKey(event)" onfocus="updateSuggestions(this.value)">${esc(commandText)}</textarea>
       <div class="chat-controls"><span class="chat-caption">Press Enter to submit · Shift + Enter for a new line</span><button class="chat-send" onclick="runPrompt()" aria-label="Submit command">↑</button></div>
       <div id="suggestions" class="suggestions" role="listbox" aria-label="Matching actions"></div>
@@ -326,7 +326,7 @@ function renderAccounts(){
   return h('Accounts','Simple account list with balances and NFRS mapping.')+
   tool(btn('＋ New Account',"openForm('account')",'primary')+btn('＋ Journal Entry',"openForm('journal')"))+
   table(['Account Code / Name','Type','NFRS Mapping','Balance (NPR)'],accounts.map(a=>`<tr><td class="${a.level===0?'parent':a.level===1?'child':'leaf'}">${a.level===0?'▼ ':a.level===1?'▾ ':'▹ '}${a.code} — ${esc(a.name)}</td><td>${a.kind}</td><td><span class="badge nfrs">${esc(a.nfrs)}</span></td><td class="right">${a.balance!==undefined?fmt(a.balance):'—'}</td></tr>`)) +
-  `<div class="notice">The old left-side accounting tree has been removed. Accounts stay accessible here or through the Ask Hisab prompt.</div>`;
+  `<div class="notice">The old left-side accounting tree has been removed. Accounts stay accessible here or through the Ask Hisabiya prompt.</div>`;
 }
 function renderInventory(){
   return h('Inventory','Products and current stock levels.')+

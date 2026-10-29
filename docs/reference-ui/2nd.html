@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hisab · Workspace Wireframe v8</title>
+<title>Hisabiya · Workspace Wireframe v8</title>
 <style>
 :root{
   --bg:#edf1f4;
@@ -187,7 +187,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 </head>
 <body>
 <div class="window">
-  <div class="titlebar"><span>▦ Hisab — Kathmandu Mini Mart</span><span>Accounting & Inventory • Workspace Wireframe v8</span></div>
+  <div class="titlebar"><span>▦ Hisabiya — Kathmandu Mini Mart</span><span>Accounting & Inventory • Workspace Wireframe v8</span></div>
   <div class="menubar">
     <button class="menu" onclick="menu(event)">File</button>
     <button class="menu" onclick="menu(event)">Edit</button>
@@ -198,7 +198,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     <button class="menu" onclick="menu(event)">Help</button>
   </div>
   <div id="menupop" class="menupop">
-    <button onclick="go('command');closemenu()">Open Ask Hisab</button>
+    <button onclick="go('command');closemenu()">Open Ask Hisabiya</button>
     <button onclick="openForm('sale');closemenu()">New Sales Invoice</button>
     <button onclick="openForm('purchase');closemenu()">New Purchase Bill</button>
     <button onclick="go('nfrsReports');closemenu()">Open NFRS Statements</button>
@@ -215,7 +215,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <script>
 const fmt=n=>'Rs '+Number(n||0).toLocaleString('en-IN');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const titles={command:'Ask Hisab',transactions:'Transactions',accounts:'Accounts',inventory:'Inventory',contacts:'Contacts',reports:'Reports',nfrsReports:'NFRS Statements',settings:'Settings'};
+const titles={command:'Ask Hisabiya',transactions:'Transactions',accounts:'Accounts',inventory:'Inventory',contacts:'Contacts',reports:'Reports',nfrsReports:'NFRS Statements',settings:'Settings'};
 let current='command';
 let tabs=['command'];
 let picked='1110';
@@ -318,7 +318,7 @@ function renderCommand(){
   return `<div class="workspace-home workspace-v8">
     <div class="v8-heading"><div><div class="workspace-eyebrow">KATHMANDU MINI MART · OVERVIEW</div><h1>Business workspace</h1><p>Tuesday, 20 October 2026 <span class="demo-label">Demo data</span></p></div><button class="workspace-settings" onclick="go('settings')">⚙ Settings</button></div>
     <div class="v8-top-grid">
-      <section class="v8-ask"><div class="v8-panel-head"><strong>✧ Ask Hisab</strong><span>Search or run an action</span></div><div class="chat-composer v8-composer">
+      <section class="v8-ask"><div class="v8-panel-head"><strong>✧ Ask Hisabiya</strong><span>Search or run an action</span></div><div class="chat-composer v8-composer">
         <textarea id="commandInput" class="chat-input" rows="2" placeholder="Try ‘show sales’, ‘create invoice’, or ‘NFRS report’..." oninput="updateSuggestions(this.value)" onkeydown="handleCommandKey(event)" onfocus="updateSuggestions(this.value)">${esc(commandText)}</textarea>
         <div class="chat-controls"><span class="chat-caption">Enter to send · Shift+Enter for new line</span><button class="chat-send" onclick="runPrompt()" aria-label="Run command">↑</button></div>
         <div id="suggestions" class="suggestions" role="listbox" aria-label="Matching actions"></div>
@@ -366,7 +366,7 @@ function renderAccounts(){
   return h('Accounts','Simple account list with balances and NFRS mapping.')+
   tool(btn('＋ New Account',"openForm('account')",'primary')+btn('＋ Journal Entry',"openForm('journal')"))+
   table(['Account Code / Name','Type','NFRS Mapping','Balance (NPR)'],accounts.map(a=>`<tr><td class="${a.level===0?'parent':a.level===1?'child':'leaf'}">${a.level===0?'▼ ':a.level===1?'▾ ':'▹ '}${a.code} — ${esc(a.name)}</td><td>${a.kind}</td><td><span class="badge nfrs">${esc(a.nfrs)}</span></td><td class="right">${a.balance!==undefined?fmt(a.balance):'—'}</td></tr>`)) +
-  `<div class="notice">The old left-side accounting tree has been removed. Accounts stay accessible here or through the Ask Hisab prompt.</div>`;
+  `<div class="notice">The old left-side accounting tree has been removed. Accounts stay accessible here or through the Ask Hisabiya prompt.</div>`;
 }
 function renderInventory(){
   return h('Inventory','Products and current stock levels.')+
