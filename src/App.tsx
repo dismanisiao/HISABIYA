@@ -13,12 +13,12 @@ type Page =
   | "Settings";
 
 const navigation = [
-  { name: "Transactions", icon: "▤" },
-  { name: "Accounts", icon: "▦" },
-  { name: "Inventory", icon: "◫" },
-  { name: "Contacts", icon: "♧" },
-  { name: "Reports", icon: "▣" },
-  { name: "NFRS", icon: "◈" },
+  { name: "Transactions", icon: "transactions" },
+  { name: "Accounts", icon: "accounts" },
+  { name: "Inventory", icon: "inventory" },
+  { name: "Contacts", icon: "contacts" },
+  { name: "Reports", icon: "reports" },
+  { name: "NFRS", icon: "nfrs" },
 ] as const;
 
 const commands = [
@@ -36,6 +36,32 @@ const commands = [
   { title: "Show NFRS statements", detail: "Open Nepal reporting views", category: "NFRS", page: "NFRS" },
   { title: "View customers and suppliers", detail: "Open contact directory", category: "Contacts", page: "Contacts" },
 ];
+
+function NavigationIcon({ name }: { name: (typeof navigation)[number]["icon"] }) {
+  const paths = {
+    transactions: "M4 5h16M4 10h16M4 15h10M4 20h7",
+    accounts: "M4 5h16v14H4zM8 9h8M8 13h5",
+    inventory: "m4 7 8-4 8 4-8 4-8-4Zm0 0v10l8 4 8-4V7M12 11v10",
+    contacts: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0",
+    reports: "M5 19V9M12 19V5M19 19v-7",
+    nfrs: "M6 3h9l3 3v15H6zM9 11h6M9 15h6M9 7h3",
+  } as const;
+
+  return (
+    <svg
+      aria-hidden="true"
+      className="shortcut-icon-svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.8"
+    >
+      <path d={paths[name]} />
+    </svg>
+  );
+}
 
 function App() {
   const [page, setPage] = useState<Page>("Home");
@@ -105,7 +131,9 @@ function App() {
               key={item.name}
               onClick={() => navigate(item.name)}
             >
-              <span className="shortcut-icon">{item.icon}</span>
+              <span className="shortcut-icon">
+                <NavigationIcon name={item.icon} />
+              </span>
               <span>{item.name}</span>
             </button>
           ))}
@@ -134,7 +162,7 @@ function App() {
                 }
               }}
               placeholder="Ask anything about your business..."
-              rows={1}
+              rows={2}
             />
 
             <div className="composer-footer">
@@ -167,23 +195,56 @@ function App() {
           </div>
         </section>
 
-        <section className="overview-section">
-          <h2>Business overview</h2>
-          <div className="overview-grid">
-            {["Sales", "Expenses", "Inventory value", "Receivables"].map((item) => (
-              <div className="overview-card" key={item}>
-                <span>{item}</span>
-                <strong>—</strong>
-                <small>No records yet</small>
+        {/* Business Overview */}
+        <section className="hisabiya-overview">
+          <div className="hisabiya-overview-header">
+            <div>
+              <h2>Business overview</h2>
+              <p>Your business at a glance</p>
+            </div>
+
+            <span className="hisabiya-period">
+              This month
+            </span>
+          </div>
+
+          <div className="hisabiya-overview-grid">
+            {[
+              {
+                title: "Sales",
+                icon: "↗",
+                description: "Total revenue",
+              },
+              {
+                title: "Expenses",
+                icon: "↘",
+                description: "Business spending",
+              },
+              {
+                title: "Inventory value",
+                icon: "▣",
+                description: "Current stock value",
+              },
+              {
+                title: "Receivables",
+                icon: "◎",
+                description: "Customer balances",
+              },
+            ].map((item) => (
+              <div className="hisabiya-overview-card" key={item.title}>
+                <div className="hisabiya-card-top">
+                  <span>{item.title}</span>
+                  <span className="hisabiya-card-icon">
+                    {item.icon}
+                  </span>
+                </div>
+
+                <div className="hisabiya-card-middle">
+                  <strong>—</strong>
+                  <p>{item.description} · No records yet</p>
+                </div>
               </div>
             ))}
-          </div>
-          <div className="activity-panel">
-            <h2>▣ &nbsp; Recent activity</h2>
-            <div className="activity-empty">
-              <span className="activity-icon">▱</span>
-              <p>Your recent activity will appear here.</p>
-            </div>
           </div>
         </section>
       </div>
